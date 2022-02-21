@@ -7,7 +7,7 @@ let name_of_parametr = ["number_of_food","number_of_people","number_of_stone","n
 let resources = {
     stone: 100,
     wood: 100,
-    food: 3500,
+    food: 350000000,
     people: 100,
     mine: 0,
     sawmill: 0,
@@ -15,8 +15,8 @@ let resources = {
     house: 0,
     heal: 0,
     engineer: 0,
-    shaman: 0,
-    army: 0,
+    shaman: 100,
+    army: 100,
 };
 
 
@@ -160,9 +160,9 @@ function new_day(){
                     resources["stone"] -= 30;
                     resources["wood"] -= 20;
                     resources['engineer']++;
-                    div.innerHTML = "Мы успешно построили дом для инжинеров, Милорд";
+                    div.innerHTML = "Мы успешно построили дом для инженеров, Милорд";
                 } else {
-                    div.innerHTML = "Кажется на дом для инжинеров нет ресурсов, Милорд";
+                    div.innerHTML = "Кажется на дом для инженеров нет ресурсов, Милорд";
                 }
                 break;
             case 6:
@@ -205,17 +205,25 @@ function new_day(){
                 if (luck >= unluck) {
                     div.innerHTML += "Город поразила хворь, но наши лекари сумели с ней справиться";
                 } else {
-                    var minus = Math.max(Math.min(Math.round((unluck - luck - getRandomInt(31)) / 100 * resources['people']), resources["people"]), 1);
-                    resources['people'] -= minus;
+                    var minus = Math.max(Math.min(Math.round((unluck - luck - getRandomInt(31)) / 100 * (resources['people'] + resources["army"])), (resources["people"] + resources["army"])), 1);
+                    var minus_army = Math.max(Math.round(minus * getRandomInt(101) / 100), resources['army']);
+                    var minus_people = minus - minus_army;
+                    resources['people'] -= minus_people;
+                    resources['army'] -= minus_army;
                     div.innerHTML += "Город поразила хворь, наши лекари были не в силах всем помочь, погибло " + minus + " человек";
                 }
                 break;
             case 1: //Непогода
                 unluck -= resources["shaman"] * 10;
-                if (luck >= unluck) {
+                var chances_for_good_end = Math.max(Math.min(resources["shaman"] - 40, 20), 0);
+                if(luck <= chances_for_good_end){
+                    div.innerHTML += "Боги были злы на нас и хотели уничтожить урожай, но наши шаманы смогли их успокоить и <strong>даже задобрить их</strong>";
+                    event_mod -= 30;
+                }
+                else if (luck >= unluck) {
                     div.innerHTML += "Боги были злы на нас и хотели уничтожить урожай, но наши шаманы смогли их успокоить";
                 } else {
-                    var minus = Math.min(Math.round((unluck - luck) * (resources['food'] / 7000)), resources["food"]);
+                    var minus = Math.min(Math.round((unluck - luck) * (resources['food'] / ((getRandomInt(10) + 3) * 1000))), resources["food"]);
                     resources['food'] -= minus;
                     div.innerHTML += "Боги не могут больше терпеть наше поведение, они забрали у нас " + minus + " еды";
                 }
@@ -285,7 +293,7 @@ function new_day(){
             document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i - 4]];
         }
 
-        if (resources["people"] <= 0) {
+        if (resources["people"] + resources["army"] <= 0) {
             alert('*В городе умерли все. Смерть вашего помощника стала последней каплей, которая сломала вашу нервную систему. Вы закончили жизнь самоубийством*');
             exit_code = 1;
         }
