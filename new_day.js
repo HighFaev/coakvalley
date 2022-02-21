@@ -177,10 +177,10 @@ function new_day(){
                 break;
             case 7:
                 var number_of_soldiers = parseInt(prompt("Сколько солдат вы хотите, Милорд?"));
-                if (number_of_soldiers * 10 <= resources["food"] && number_of_soldiers * 2 <= resources["stone"] && number_of_soldiers * 3 <= resources["wood"]) {
-                    resources["stone"] -= number_of_soldiers * 2;
-                    resources["wood"] -= number_of_soldiers * 3;
-                    resources["food"] -= number_of_soldiers * 10;
+                if (number_of_soldiers * 4 <= resources["food"] && number_of_soldiers * 1 <= resources["stone"] && number_of_soldiers * 2 <= resources["wood"]) {
+                    resources["stone"] -= number_of_soldiers * 1;
+                    resources["wood"] -= number_of_soldiers * 2;
+                    resources["food"] -= number_of_soldiers * 4;
                     resources["people"] -= number_of_soldiers;
                     resources["army"] += number_of_soldiers;
                     div.innerHTML = "Мы успешно призвали " + number_of_soldiers + " в армию, Милорд";
