@@ -7,7 +7,7 @@ let name_of_parametr = ["number_of_food","number_of_people","number_of_stone","n
 let resources = {
     stone: 100,
     wood: 100,
-    food: 3000,
+    food: 3500,
     people: 100,
     mine: 0,
     sawmill: 0,
@@ -197,15 +197,15 @@ function new_day(){
         div.innerHTML += "<br>";
         var event = getRandomInt(7);
         var luck = getRandomInt(101);
-        var unluck = getRandomInt(101);
+        var unluck = getRandomInt(51);
         unluck += event_mod;
         switch (event) { //Ивенты
-            case 0: //хворь
+            case 0: //Хворь
                 unluck -= resources["heal"] * 10;
                 if (luck >= unluck) {
                     div.innerHTML += "Город поразила хворь, но наши лекари сумели с ней справиться";
                 } else {
-                    var minus = Math.max(Math.min(Math.round((unluck - luck) * (resources['people'] / 150)), resources["people"]), 1);
+                    var minus = Math.max(Math.min(Math.round((unluck - luck) / 100 * resources['people']), resources["people"]), 1);
                     resources['people'] -= minus;
                     div.innerHTML += "Город поразила хворь, наши лекари были не в силах всем помочь, погибло " + minus + " человек";
                 }
@@ -215,7 +215,7 @@ function new_day(){
                 if (luck >= unluck) {
                     div.innerHTML += "Боги были злы на нас и хотели уничтожить урожай, но наши шаманы смогли их успокоить";
                 } else {
-                    var minus = Math.min(Math.round((unluck - luck) * (resources['food'] / 5000)), resources["food"]);
+                    var minus = Math.min(Math.round((unluck - luck) * (resources['food'] / 7000)), resources["food"]);
                     resources['food'] -= minus;
                     div.innerHTML += "Боги не могут больше терпеть наше поведение, они забрали у нас " + minus + " еды";
                 }
@@ -226,8 +226,8 @@ function new_day(){
                     div.innerHTML += "В городе произошло землетрясение, но укрепления, которые построили инженеры, спасли все строения";
                 } else {
                     var choose = getRandomInt(8) + 5;
-                    var minus = Math.max(Math.max(getRandomInt(resources[name_of_resource[choose]]) - Math.round(luck / 20), 1), resources[name_of_resource[choose]]);
-                    if(minus <= resources[choose]){
+                    var minus = Math.max(Math.round(getRandomInt(resources[name_of_resource[choose]]) * (Math.max(50 - (unluck - luck), 0) + getRandomInt(31)) / 100) , 1);
+                    if(minus <= resources[name_of_resource[choose]]){
                         resources[name_of_resource[choose]] -= minus;
                         div.innerHTML += "В городе произошло землетрясение, которое уничтожило " + minus + " &quot;" + rus_name_of_building[choose - 5] + "&quot; ";
                     } else {
@@ -253,7 +253,7 @@ function new_day(){
                 resources['food'] -= Math.round(resources['army'] / 3);
                 resources['food'] += resources['farm'] * 5;
             }
-            if (i === 1) {
+            if (i === 1 && resources['people'] !== 0) {
                 resources['people'] += resources['house'] * 3;
             }
             if (i === 2) {
@@ -298,5 +298,5 @@ function new_day(){
         end.innerHTML = "ДЕНЬ " + day;
         document.getElementById("space_for_message").append(end);
         document.getElementById("space_for_message").scrollTop = Number.MAX_SAFE_INTEGER;
-        event_mod += getRandomInt(11);
+        event_mod += getRandomInt(10);
     }}
