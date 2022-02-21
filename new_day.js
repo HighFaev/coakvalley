@@ -289,6 +289,10 @@ function new_day(){
             alert('*В городе умерли все. Смерть вашего помощника стала последней каплей, которая сломала вашу нервную систему. Вы закончили жизнь самоубийством*');
             exit_code = 1;
         }
+        if (resources["food"] <= 0) {
+            alert('К сожалению, голодным жителям безразницы, что у вас в руках. Боюсь, что через 10 минут вы будете съедены, Милорд. Это конец вашей истории');
+            exit_code = 1;
+        }
         document.getElementById("number_of_days").textContent = day + ' ';
         let end = document.createElement('div');
         end.innerHTML = "ДЕНЬ " + day;
