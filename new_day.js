@@ -20,9 +20,10 @@ let resources = {
 };
 
 
-var player_choice = -1;
-var day = 0;
-
+var player_choice = 8;
+var day = 1;
+var event_mod = 0;
+var exit_code = 0;
 //Забейте на эту часть кода, нужен, что бы с самого старта правильно показать ресурсы
 for(var i = 0; i < 5; i++){ // Заполняем количество ресов
     document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]];
@@ -46,7 +47,9 @@ for(var i = 9; i < 16; i++){ // Заполняем количество здан
     document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i - 4]];
 }
 
-
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
 
 
 
@@ -98,140 +101,198 @@ function new_choice11(){
 
 
 function new_day(){
-    day++;
-    let div = document.createElement('div');
-    switch(player_choice){
-        case 0:
-            if(resources["stone"] >= 15 && resources["wood"] >= 15){
-                resources["stone"] -= 15;
-                resources["wood"] -= 15;
-                resources['farm']++;
-                div.innerHTML = "Мы успешно построили ферму, Милорд";
-            } else {
-                div.innerHTML = "Кажется на ферму нет ресурсов, Милорд";
-            }
-            break;
-        case 1:
-            if(resources["stone"] >= 10 && resources["wood"] >= 10){
-                resources["stone"] -= 10;
-                resources["wood"] -= 10;
-                resources['house']++;
-                div.innerHTML ="Мы успешно построили дом, Милорд";
-            } else {
-                div.innerHTML = "Кажется на дом нет ресурсов, Милорд";
-            }
-            break;
-        case 2:
-            if(resources["stone"] >= 20 && resources["wood"] >= 10){
-                resources["stone"] -= 20;
-                resources["wood"] -= 10;
-                resources['mine']++;
-                div.innerHTML = "Мы успешно построили шахту, Милорд";
-            } else {
-                div.innerHTML = "Кажется на шахту нет ресурсов, Милорд";
-            }
-            break;
-        case 3:
-            if(resources["stone"] >= 10 && resources["wood"] >= 20){
-                resources["stone"] -= 10;
-                resources["wood"] -= 20;
-                resources['sawmill']++;
-                div.innerHTML = "Мы успешно построили лесопилку, Милорд";
-            } else {
-                div.innerHTML = "Кажется на лесопилку нет ресурсов, Милорд";
-            }
-            break;
-        case 4:
-            if(resources["stone"] >= 15 && resources["wood"] >= 15){
-                resources["stone"] -= 15;
-                resources["wood"] -= 15;
-                resources['heal']++;
-                div.innerHTML = "Мы успешно построили дом для лекаря, Милорд";
-            } else {
-                div.innerHTML = "Кажется на дом для лекаря нет ресурсов, Милорд";
-            }
-            break;
-        case 5:
-            if(resources["stone"] >= 30 && resources["wood"] >= 20){
-                resources["stone"] -= 30;
-                resources["wood"] -= 20;
-                resources['engineer']++;
-                div.innerHTML = "Мы успешно построили дом для инжинеров, Милорд";
-            } else {
-                div.innerHTML = "Кажется на дом для инжинеров нет ресурсов, Милорд";
-            }
-            break;
-        case 6:
-            if(resources["stone"] >= 10 && resources["wood"] >= 30){
-                resources["stone"] -= 10;
-                resources["wood"] -= 30;
-                resources['shaman']++;
-                div.innerHTML = "Мы успешно построили хижину для шамана, Милорд";
-            } else {
-                div.innerHTML = "Кажется на хижину для шамана нет ресурсов, Милорд";
-            }
-            break;
-        case 7:
-            var number_of_soldiers = parseInt(prompt("Сколько солдат вы хотите, Милорд?"));
-            if(number_of_soldiers * 10 <= resources["food"] && number_of_soldiers * 2 <= resources["stone"] && number_of_soldiers * 3 <= resources["wood"]){
-                resources["stone"] -= number_of_soldiers * 2;
-                resources["wood"] -= number_of_soldiers * 3;
-                resources["food"] -= number_of_soldiers * 10;
-                resources["people"] -= number_of_soldiers;
-                resources["army"] += number_of_soldiers;
-                div.innerHTML = "Мы успешно призвали " + number_of_soldiers + " в армию, Милорд";
-            } else {
-                div.innerHTML = "Кажется у нас нет столько ресурсов для армии, Милорд";
-            }
-            break;
-        case 8:
-            div.innerHTML = "Решили взять отдых, Милорд?";
-            break;
+    if(exit_code == 0) {
+        day++;
+        let div = document.createElement('div');
+        switch (player_choice) {
+            case 0:
+                if (resources["stone"] >= 15 && resources["wood"] >= 15) {
+                    resources["stone"] -= 15;
+                    resources["wood"] -= 15;
+                    resources['farm']++;
+                    div.innerHTML = "Мы успешно построили ферму, Милорд";
+                } else {
+                    div.innerHTML = "Кажется на ферму нет ресурсов, Милорд";
+                }
+                break;
+            case 1:
+                if (resources["stone"] >= 10 && resources["wood"] >= 10) {
+                    resources["stone"] -= 10;
+                    resources["wood"] -= 10;
+                    resources['house']++;
+                    div.innerHTML = "Мы успешно построили дом, Милорд";
+                } else {
+                    div.innerHTML = "Кажется на дом нет ресурсов, Милорд";
+                }
+                break;
+            case 2:
+                if (resources["stone"] >= 20 && resources["wood"] >= 10) {
+                    resources["stone"] -= 20;
+                    resources["wood"] -= 10;
+                    resources['mine']++;
+                    div.innerHTML = "Мы успешно построили шахту, Милорд";
+                } else {
+                    div.innerHTML = "Кажется на шахту нет ресурсов, Милорд";
+                }
+                break;
+            case 3:
+                if (resources["stone"] >= 10 && resources["wood"] >= 20) {
+                    resources["stone"] -= 10;
+                    resources["wood"] -= 20;
+                    resources['sawmill']++;
+                    div.innerHTML = "Мы успешно построили лесопилку, Милорд";
+                } else {
+                    div.innerHTML = "Кажется на лесопилку нет ресурсов, Милорд";
+                }
+                break;
+            case 4:
+                if (resources["stone"] >= 15 && resources["wood"] >= 15) {
+                    resources["stone"] -= 15;
+                    resources["wood"] -= 15;
+                    resources['heal']++;
+                    div.innerHTML = "Мы успешно построили дом для лекаря, Милорд";
+                } else {
+                    div.innerHTML = "Кажется на дом для лекаря нет ресурсов, Милорд";
+                }
+                break;
+            case 5:
+                if (resources["stone"] >= 30 && resources["wood"] >= 20) {
+                    resources["stone"] -= 30;
+                    resources["wood"] -= 20;
+                    resources['engineer']++;
+                    div.innerHTML = "Мы успешно построили дом для инжинеров, Милорд";
+                } else {
+                    div.innerHTML = "Кажется на дом для инжинеров нет ресурсов, Милорд";
+                }
+                break;
+            case 6:
+                if (resources["stone"] >= 10 && resources["wood"] >= 30) {
+                    resources["stone"] -= 10;
+                    resources["wood"] -= 30;
+                    resources['shaman']++;
+                    div.innerHTML = "Мы успешно построили хижину для шамана, Милорд";
+                } else {
+                    div.innerHTML = "Кажется на хижину для шамана нет ресурсов, Милорд";
+                }
+                break;
+            case 7:
+                var number_of_soldiers = parseInt(prompt("Сколько солдат вы хотите, Милорд?"));
+                if (number_of_soldiers * 10 <= resources["food"] && number_of_soldiers * 2 <= resources["stone"] && number_of_soldiers * 3 <= resources["wood"]) {
+                    resources["stone"] -= number_of_soldiers * 2;
+                    resources["wood"] -= number_of_soldiers * 3;
+                    resources["food"] -= number_of_soldiers * 10;
+                    resources["people"] -= number_of_soldiers;
+                    resources["army"] += number_of_soldiers;
+                    div.innerHTML = "Мы успешно призвали " + number_of_soldiers + " в армию, Милорд";
+                } else {
+                    div.innerHTML = "Кажется у нас нет столько ресурсов для армии, Милорд";
+                }
+                break;
+            case 8:
+                div.innerHTML = "Решили взять отдых, Милорд?";
+                break;
 
-    }
-    document.getElementById("space_for_message").append(div);
-    document.getElementById("space_for_message").scrollTop = Number.MAX_SAFE_INTEGER;
-    for(var i = 0; i < 5; i++){ // Заполняем количество ресов
-        if(i === 0){
-            resources['food'] -= resources['people'];
-            resources['food'] -= resources['army'];
-            resources['food'] += resources['farm'] * 5;
-        }
-        if(i === 1){
-            resources['people'] += resources['house'] * 3;
-        }
-        if(i === 2){
-            resources['stone'] += resources['mine'] * 2;
-        }
-        if(i === 3){
-            resources['wood'] += resources['sawmill'] * 4;
-        }
-        document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]];
-
-
-    }
-    for(var i = 5; i < 9; i++){ // Заполняем прирост ресов
-        if(i === 5){
-            document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]] * 5;
-        }
-        if(i === 6){
-            document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]] * 3;
-        }
-        if(i === 7){
-            document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]] * 2;
-        }
-        if(i === 8){
-            document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]] * 4;
         }
 
-    }
-    for(var i = 9; i < 16; i++){ // Заполняем количество зданий
-        document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i - 4]];
-    }
-    document.getElementById("number_of_days").textContent = day + ' ';
+        div.innerHTML += "<br>";
+        var event = getRandomInt(7);
+        var luck = getRandomInt(101);
+        var unluck = getRandomInt(101);
+        unluck += event_mod;
+        switch (event) { //Ивенты
+            case 0: //хворь
+                unluck -= resources["heal"] * 10;
+                if (luck >= unluck) {
+                    div.innerHTML += "Город поразила хворь, но наши лекари сумели с ней справиться";
+                } else {
+                    var minus = Math.max(Math.min(Math.round((unluck - luck) * (resources['people'] / 150)), resources["people"]), 1);
+                    resources['people'] -= minus;
+                    div.innerHTML += "Город поразила хворь, наши лекари были не в силах всем помочь, погибло " + minus + " человек";
+                }
+                break;
+            case 1: //Непогода
+                unluck -= resources["shaman"] * 10;
+                if (luck >= unluck) {
+                    div.innerHTML += "Боги были злы на нас и хотели уничтожить урожай, но наши шаманы смогли их успокоить";
+                } else {
+                    var minus = Math.min(Math.round((unluck - luck) * (resources['food'] / 5000)), resources["food"]);
+                    resources['food'] -= minus;
+                    div.innerHTML += "Боги не могут больше терпеть наше поведение, они забрали у нас " + minus + " еды";
+                }
+                break;
+            case 2: //Лавина
+                unluck -= resources["engineer"] * 10;
+                if (luck >= unluck) {
+                    div.innerHTML += "В городе произошло землетрясение, но укрепления, которые построили инженеры, спасли все строения";
+                } else {
+                    var choose = getRandomInt(8) + 5;
+                    var minus = Math.max(Math.max(getRandomInt(resources[name_of_resource[choose]]) - Math.round(luck / 20), 1), resources[name_of_resource[choose]]);
+                    if(minus <= resources[choose]){
+                        resources[name_of_resource[choose]] -= minus;
+                        div.innerHTML += "В городе произошло землетрясение, которое уничтожило " + minus + " &quot;" + rus_name_of_building[choose - 5] + "&quot; ";
+                    } else {
+                        div.innerHTML += "В городе произошло землетрясение, но к счастью, оно произошло на пустыре";
+                    }
+                }
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
 
-    let end = document.createElement('div');
-    end.innerHTML = "<strong>НОВЫЙ ДЕНЬ</strong>";
-    document.getElementById("space_for_message").append(end);
-    document.getElementById("space_for_message").scrollTop = Number.MAX_SAFE_INTEGER;
-}
+        }
+        document.getElementById("space_for_message").append(div);
+        document.getElementById("space_for_message").scrollTop = Number.MAX_SAFE_INTEGER;
+        for (var i = 0; i < 5; i++) { // Заполняем количество ресов
+            if (i === 0) {
+                resources['food'] -= resources['people'];
+                resources['food'] -= Math.round(resources['army'] / 3);
+                resources['food'] += resources['farm'] * 5;
+            }
+            if (i === 1) {
+                resources['people'] += resources['house'] * 3;
+            }
+            if (i === 2) {
+                resources['stone'] += resources['mine'] * 2;
+            }
+            if (i === 3) {
+                resources['wood'] += resources['sawmill'] * 4;
+            }
+            document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]];
+
+
+        }
+        for (var i = 5; i < 9; i++) { // Заполняем прирост ресов
+            if (i === 5) {
+                document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]] * 5;
+            }
+            if (i === 6) {
+                document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]] * 3;
+            }
+            if (i === 7) {
+                document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]] * 2;
+            }
+            if (i === 8) {
+                document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i]] * 4;
+            }
+
+        }
+        for (var i = 9; i < 16; i++) { // Заполняем количество зданий
+            document.getElementById(name_of_parametr[i]).textContent = resources[name_of_resource[i - 4]];
+        }
+
+        if (resources["people"] <= 0) {
+            alert('*В городе умерли все. Смерть вашего помощника стала последней каплей, которая сломала вашу нервную систему. Вы закончили жизнь самоубийством*');
+            exit_code = 1;
+        }
+        document.getElementById("number_of_days").textContent = day + ' ';
+        let end = document.createElement('div');
+        end.innerHTML = "ДЕНЬ " + day;
+        document.getElementById("space_for_message").append(end);
+        document.getElementById("space_for_message").scrollTop = Number.MAX_SAFE_INTEGER;
+        event_mod += getRandomInt(11);
+    }}
