@@ -7,7 +7,7 @@ let name_of_parametr = ["number_of_food","number_of_people","number_of_stone","n
 let resources = {
     stone: 100,
     wood: 100,
-    food: 350000000,
+    food: 3500,
     people: 100,
     mine: 0,
     sawmill: 0,
@@ -15,8 +15,8 @@ let resources = {
     house: 0,
     heal: 0,
     engineer: 0,
-    shaman: 100,
-    army: 100,
+    shaman: 0,
+    army: 0,
 };
 
 
