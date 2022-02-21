@@ -298,5 +298,5 @@ function new_day(){
         end.innerHTML = "ДЕНЬ " + day;
         document.getElementById("space_for_message").append(end);
         document.getElementById("space_for_message").scrollTop = Number.MAX_SAFE_INTEGER;
-        event_mod += getRandomInt(10);
+        event_mod += getRandomInt(6);
     }}
