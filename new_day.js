@@ -101,7 +101,7 @@ function new_choice11(){
 
 
 function new_day(){
-    if(exit_code == 0) {
+    if(exit_code === 0) {
         day++;
         let div = document.createElement('div');
         switch (player_choice) {
@@ -205,7 +205,7 @@ function new_day(){
                 if (luck >= unluck) {
                     div.innerHTML += "Город поразила хворь, но наши лекари сумели с ней справиться";
                 } else {
-                    var minus = Math.max(Math.min(Math.round((unluck - luck) / 100 * resources['people']), resources["people"]), 1);
+                    var minus = Math.max(Math.min(Math.round((unluck - luck - getRandomInt(31)) / 100 * resources['people']), resources["people"]), 1);
                     resources['people'] -= minus;
                     div.innerHTML += "Город поразила хворь, наши лекари были не в силах всем помочь, погибло " + minus + " человек";
                 }
