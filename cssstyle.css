@@ -1,0 +1,102 @@
+.icon{
+    width: 9vh;
+    height: 9vh;
+}
+.text20{
+    font-size: 2vh;
+}
+.text30{
+    font-size: 5vh;
+}
+.text40{
+    font-size: 6vh;
+}
+.text50{
+    font-size: 8vh;
+}
+div{
+    font-family: Arial;
+}
+
+div#game{
+    display: flex;
+    flex-direction: row;
+}
+
+div#interface{
+    max-width: 100vh;
+    /*border: 1px solid black;*/
+}
+table#table_of_resources{
+    /*border: 1px solid black;*/
+    border-collapse: separate;
+    border-spacing: 10px 7px;
+}
+table#table_of_resources td{
+    /*border: 1px solid black; Без обводки красивее*/
+    text-align: center;
+
+}
+
+
+table#table_of_grow_resources{
+    /*border: 1px solid black;*/
+    border-collapse: separate;
+    border-spacing: 10px 7px;
+}
+table#table_of_grow_resources td{
+    /*border: 1px solid black; Без обводки красивее*/
+    text-align: center;
+
+}
+
+
+table#table_of_buildings{
+    /*border: 1px solid black; Без обводки красивее*/
+    border-collapse: separate;
+    border-spacing: 10px 7px;
+}
+table#table_of_buildings td{
+    /*border: 1px solid black; Без обводки красивее*/
+    text-align: center;
+}
+
+div#game-info{
+    border: 1px solid black;
+}
+table#table_of_info{
+    /*border: 1px solid black;*/
+    border-collapse: separate;
+    border-spacing: 10px 7px;
+    margin: auto;
+}
+table#table_of_info td{
+    border: 1px solid black;
+    text-align: center;
+    font-size: 3vh;
+}
+
+
+div#control{
+    max-width: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+div#control_buttons{
+    margin-top: 10px;
+
+}
+
+div#info{
+    max-width: 75vh;
+    /*border: 1px solid black;*/
+}
+
+output#space_for_message{
+    border: 1px solid black;
+    width: 75vh;
+    height: 45vh;
+    word-wrap: break-word;
+    overflow: scroll;
+}
