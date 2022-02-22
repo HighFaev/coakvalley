@@ -27,6 +27,16 @@ div#interface{
     max-width: 100vh;
     /*border: 1px solid black;*/
 }
+div#day{
+    text-align: center;
+}
+div#numbers{
+    display: flex;
+    justify-content: space-around;
+}
+div#resources{
+    text-align: center;
+}
 table#table_of_resources{
     /*border: 1px solid black;*/
     border-collapse: separate;
@@ -38,7 +48,9 @@ table#table_of_resources td{
 
 }
 
-
+div#grow_resources{
+    text-align: center;
+}
 table#table_of_grow_resources{
     /*border: 1px solid black;*/
     border-collapse: separate;
@@ -50,7 +62,9 @@ table#table_of_grow_resources td{
 
 }
 
-
+div#buildings{
+    text-align: center
+}
 table#table_of_buildings{
     /*border: 1px solid black; Без обводки красивее*/
     border-collapse: separate;
@@ -87,15 +101,18 @@ div#control_buttons{
     margin-top: 10px;
 
 }
-
+div#new_day_button{
+    margin-top: 20px;
+}
 div#info{
     max-width: 75vh;
     /*border: 1px solid black;*/
-
+    text-align: center;
 }
 
 div#messages{
-
+    display: flex;
+    flex-direction: column;
 }
 output#space_for_message{
     border: 1px solid black;

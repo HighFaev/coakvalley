@@ -8,14 +8,14 @@
 <body>
 <div id="game">
     <div id="interface">
-        <div id="day" style="text-align: center">
+        <div id="day" >
             <span id="number_of_days" class="text50">1 </span>
             <span class="text50">День</span>
         </div>
 
-        <div id="numbers" style="display: flex; justify-content: space-around">
+        <div id="numbers">
 
-            <div id="resources" style="text-align: center">
+            <div id="resources">
                 <span class="text40">Ресурсы</span>
                 <table id="table_of_resources" >
                     <tr>
@@ -41,7 +41,7 @@
                 </table>
             </div>
 
-            <div id="gorw_resources" style="text-align: center;">
+            <div id="gorw_resources" >
                 <span class="text40">Прирост</span>
                 <table id="table_of_grow_resources">
                     <tr>
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div id="buildings" style="text-align: center">
+        <div id="buildings" >
         <span class="text40">Постройки</span>
         <table id="table_of_buildings">
             <tr>
@@ -92,30 +92,30 @@
 
 
     <div id="control">
-        <div class="text40" style="font-family: Arial">Отдайте свой приказ, Милорд</div>
+        <div class="text40">Отдайте свой приказ, Милорд</div>
         <div id="control_buttons">
-            <button onclick="new_choice1(); newinfo(0)"><img src="img/farm.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice2(); newinfo(1)"><img src="img/house.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice3(); newinfo(2)"><img src="img/mine.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice4(); newinfo(3)"><img src="img/sawmill.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice5(); newinfo(4)"><img src="img/healer_house.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice6(); newinfo(5)"><img src="img/gears.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice7(); newinfo(6)"><img src="img/shaman.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice8(); newinfo(7)"><img src="img/swords.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice9(); newinfo(8)"><img src="img/zzz.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(0); newinfo(0)"><img src="img/farm.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(1); newinfo(1)"><img src="img/house.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(2); newinfo(2)"><img src="img/mine.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(3); newinfo(3)"><img src="img/sawmill.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(4); newinfo(4)"><img src="img/healer_house.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(5); newinfo(5)"><img src="img/gears.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(6); newinfo(6)"><img src="img/shaman.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(7); newinfo(7)"><img src="img/swords.png" class="icon" alt="something wrong"></button>
+            <button onclick="new_choice(8); newinfo(8)"><img src="img/zzz.png" class="icon" alt="something wrong"></button>
         </div>
-        <div id="choice" style="margin-top: 20px">
+        <div id="choice">
             <div class="text30">Ваш выбор:
                 <div class="text30" id="show_choice"></div>
             </div>
         </div>
-        <div id="new_day_button" style="margin-top: 20px">
+        <div id="new_day_button" >
             <button class="text30" onclick="new_day()">Закончить день</button>
         </div>
     </div>
 
 
-    <div id="info" style="text-align: center">
+    <div id="info" >
         <div id="game_info">
         <span class="text40">Информация по домам</span>
         <table id="table_of_info">
@@ -141,8 +141,8 @@
             </tr>
         </table>
         </div>
-        <div id="messages" style="display: flex; flex-direction: column">
-            <span class="text40" style="">Сообщения</span>
+        <div id="messages">
+            <span class="text40">Сообщения</span>
             <output id="space_for_message">
 
             </output>

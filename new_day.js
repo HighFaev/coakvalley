@@ -117,50 +117,11 @@ for (let i = 9; i < 16; i++) { // Заполняем количество зда
 
 
 
-function new_choice1(){ // Функции для кнопок выбора новой постройки(Одни костыли +-)
-    player_choice = 0;
+function new_choice(q){ // Функции для кнопок выбора новой постройки(Одни костыли +-)
+    player_choice = q;
     document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
 }
-function new_choice2(){
-    player_choice = 1;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice3(){
-    player_choice = 2;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice4(){
-    player_choice = 3;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice5(){
-    player_choice = 4;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice6(){
-    player_choice = 5;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice7(){
-    player_choice = 6;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice8(){
-    player_choice = 7;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice9(){
-    player_choice = 8;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice10(){
-    player_choice = 9;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
-function new_choice11(){
-    player_choice = 10;
-    document.getElementById("show_choice").textContent = rus_name_of_building[player_choice];
-}
+
 
 
 function new_day(){ // Функция просчета нового дня
