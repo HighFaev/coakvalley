@@ -164,7 +164,6 @@ function new_choice11(){
 
 
 function new_day(){ // Функция просчета нового дня
-    alert(resources["people"]);
     if(exit_code === 0) {
         day++;
 
