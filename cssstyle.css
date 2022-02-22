@@ -1,3 +1,7 @@
+body{
+    margin: 0;
+    padding: 0;
+}
 .icon{
     width: 9vh;
     height: 9vh;
@@ -14,8 +18,141 @@
 .text50{
     font-size: 8vh;
 }
+.start_screen_text {
+    font-size: 9vh;
+    color: #000000;
+    text-shadow:
+            -0   -1px 0   #FFFFFF,
+            0   -1px 0   #FFFFFF,
+            -0    1px 0   #FFFFFF,
+            0    1px 0   #FFFFFF,
+            -1px -0   0   #FFFFFF,
+            1px -0   0   #FFFFFF,
+            -1px  0   0   #FFFFFF,
+            1px  0   0   #FFFFFF,
+            -1px -1px 0   #FFFFFF,
+            1px -1px 0   #FFFFFF,
+            -1px  1px 0   #FFFFFF,
+            1px  1px 0   #FFFFFF,
+            -1px -1px 0   #FFFFFF,
+            1px -1px 0   #FFFFFF,
+            -1px  1px 0   #FFFFFF,
+            1px  1px 0   #FFFFFF;
+    text-align: center;
+}
+.container-hide{
+    display:none;
+}
 div{
     font-family: Arial;
+}
+
+div#start_screen{
+    position: absolute;
+    height: 100%;
+    width: 101%;
+
+    background: -webkit-linear-gradient(45deg, rgb(0, 0, 0, 0.9), rgba(54, 165, 204, 0.9));
+    background: -moz-linear-gradient(45deg, rgb(0, 0, 0, 0.9), rgba(54, 165, 204, 0.9));
+    background: linear-gradient(45deg, rgb(0, 0, 0, 0.9), rgba(54, 165, 204, 0.9));
+    display: flex;
+    flex-direction: column;
+
+}
+div#difficulty_buttons{
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.difficulty-button1{
+    font-size: 2.5vh;
+    background: rgb(94, 98, 96);
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button2{
+    font-size: 2.5vh;
+    background: #1e7e34;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button3{
+    font-size: 2.5vh;
+    background: #6db92d;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button4{
+    font-size: 2.5vh;
+    background: #d0c22f;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button5{
+    font-size: 2.5vh;
+    background: #b44b2d;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button6{
+    font-size: 2.5vh;
+    background: #ff0000;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button7{
+    font-size: 2.5vh;
+    background: #5d39b6;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button8{
+    font-size: 2.5vh;
+    background: #dd02ff;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button9{
+    font-size: 2.5vh;
+    background: #ff00dd;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.difficulty-button10{
+    font-size: 2.5vh;
+    background: #00ffc4;
+    max-width: 15vh;
+    max-height: 15vh;
+    min-width: 15vh;
+    min-height: 15vh;
+}
+.submit_button{
+    background: rgba(255, 250, 0, 0);
+    max-width: 50vh;
+    max-height: 20vh;
+    min-width: 50vh;
+    min-height: 20vh;
+    margin: auto;
+    font-size: 6vh;
 }
 
 div#game{

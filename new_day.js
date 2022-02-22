@@ -19,6 +19,24 @@ let price_info = ["15 камня 15 дерева",
     "2 камня 1 дерево 5 еды (за одного.)",
     "Потерянное время"];
 
+let list_of_difficulty = ["Без модификаторов",
+    "Я решил пройти это с первой попытки",
+    "Братик, мне нужнa небольшая помощь",
+    "Идеальный баланс",
+    "Люблю хэви-метал",
+    "GG",
+    "Сложно 1",
+    "Сложно 2",
+    "ПОЛНЫЙ АД",
+    "Кастом"];
+
+function new_difficulty(q){
+    document.getElementById("player_difficulty").textContent = list_of_difficulty[q];
+}
+
+function submit(){
+    document.getElementById("want_hide").classList.add("container-hide");
+}
 
 function newinfo(q){
     document.getElementById("info_name_of_building").textContent = name_info[q];
