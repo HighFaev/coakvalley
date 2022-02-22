@@ -206,7 +206,7 @@ function new_day(){
                     div.innerHTML += "Город поразила хворь, но наши лекари сумели с ней справиться";
                 } else {
                     var minus = Math.max(Math.min(Math.round((unluck - luck - getRandomInt(31)) / 100 * (resources['people'] + resources["army"])), (resources["people"] + resources["army"])), 1);
-                    var minus_army = Math.max(Math.round(minus * getRandomInt(101) / 100), resources['army']);
+                    var minus_army = Math.min(Math.round(minus * getRandomInt(101) / 100), resources['army']);
                     var minus_people = minus - minus_army;
                     resources['people'] -= minus_people;
                     resources['army'] -= minus_army;
