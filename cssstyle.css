@@ -69,10 +69,10 @@ table#table_of_info{
     border-collapse: separate;
     border-spacing: 10px 7px;
     margin: auto;
+    height: 30vh;
 }
 table#table_of_info td{
     border: 1px solid black;
-    text-align: center;
     font-size: 3vh;
 }
 
@@ -91,12 +91,17 @@ div#control_buttons{
 div#info{
     max-width: 75vh;
     /*border: 1px solid black;*/
+
 }
 
+div#messages{
+
+}
 output#space_for_message{
     border: 1px solid black;
     width: 75vh;
     height: 45vh;
     word-wrap: break-word;
     overflow: scroll;
+
 }
