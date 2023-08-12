@@ -1,174 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <title>WebBrowser</title>
-    <link rel="stylesheet" href="cssstyle.css">
+  <meta charset="utf-8">
+  <title>Change_me</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="codemirror-5.65.14/lib/codemirror.js"></script>
+  <link href="codemirror-5.65.14/lib/codemirror.css" rel="stylesheet"/>
+  <link href="codemirror-5.65.14/theme/dracula.css" rel="stylesheet"/>
+  <script src="codemirror-5.65.14/mode/cmake/cmake.js"></script>
 </head>
+
 <body>
-<div id="want_hide">
-<div id="start_screen">
-    <div class="start_screen_text" style="margin-top: 10vh">Выберете сложность</div>
-    <div class="start_screen_text" style="margin-top: 10vh" id="player_difficulty"></div>
-    <div id="difficulty_buttons">
-        <button class="difficulty-button; difficulty-button1" onclick="new_difficulty(0)">Без модифика- торов</button>
-        <button class="difficulty-button; difficulty-button2" onclick="new_difficulty(1)">Я решил пройти это с первой попытки</button>
-        <button class="difficulty-button; difficulty-button3" onclick="new_difficulty(2)">Братик, мне нужнa небольшая помощь</button>
-        <button class="difficulty-button; difficulty-button4" onclick="new_difficulty(3)">Идеальный баланс</button>
-        <button class="difficulty-button; difficulty-button5" onclick="new_difficulty(4)">Люблю хэви-метал</button>
-        <button class="difficulty-button; difficulty-button6" onclick="new_difficulty(5)">GG</button>
-        <button class="difficulty-button; difficulty-button7" onclick="new_difficulty(6)">Сложно 1</button>
-        <button class="difficulty-button; difficulty-button8" onclick="new_difficulty(7)">Сложно 2</button>
-        <button class="difficulty-button; difficulty-button9" onclick="new_difficulty(8)">ПОЛНЫЙ АД</button>
-        <button class="difficulty-button; difficulty-button10" onclick="new_difficulty(9)">Кастом</button>
-    </div>
-    <button class="start_screen_text; submit_button" onclick="submit()">Выбрать</button>
-</div>
-</div>
-
-<div id="game">
-    <div id="interface">
-        <div id="day" >
-            <span id="number_of_days" class="text50">1 </span>
-            <span class="text50">День</span>
+  <div class="main">
+      <div class="left-side">
+        <div class="code">
+          <textarea id="editor"></textarea>
         </div>
-
-        <div id="numbers">
-
-            <div id="resources">
-                <span class="text40">Ресурсы</span>
-                <table id="table_of_resources" >
-                    <tr>
-                        <td><img src="img/food.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_food" class="text30">2</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/people.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_people" class="text30">2</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/stone.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_stone" class="text30">2</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/wood.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_wood" class="text30">2</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/swords.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_army" class="text30">2</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div id="gorw_resources" >
-                <span class="text40">Прирост</span>
-                <table id="table_of_grow_resources">
-                    <tr>
-                        <td><img src="img/food.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_grow_food" class="text30">+2</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/people.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_grow_people" class="text30">+2</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/stone.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_grow_stone" class="text30">+2</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/wood.png" class="icon" alt="something wrong"></td>
-                        <td id="number_of_grow_wood" class="text30">+2</td>
-                    </tr>
-                </table>
-            </div>
+        <div class="buttons">
+          <button class="guide-button">Справочник</button>
+          <button class="submit-button">Отправить код</button>
         </div>
+      </div>
 
-        <div id="buildings" >
-        <span class="text40">Постройки</span>
-        <table id="table_of_buildings">
-            <tr>
-                <td><img src="img/farm.png" class="icon" alt="something wrong"></td>
-                <td><img src="img/house.png" class="icon" alt="something wrong"></td>
-                <td><img src="img/mine.png" class="icon" alt="something wrong"></td>
-                <td><img src="img/sawmill.png" class="icon" alt="something wrong"></td>
-                <td><img src="img/healer_house.png" class="icon" alt="something wrong"></td>
-                <td><img src="img/gears.png" class="icon" alt="something wrong"></td>
-                <td><img src="img/shaman.png" class="icon" alt="something wrong"></td>
-            </tr>
-            <tr>
-                <td id="number_of_farms" class="text30">0</td>
-                <td id="number_of_houses" class="text30">0</td>
-                <td id="number_of_mines" class="text30">0</td>
-                <td id="number_of_sawmills" class="text30">0</td>
-                <td id="number_of_healers" class="text30">0</td>
-                <td id="number_of_engins" class="text30">0</td>
-                <td id="number_of_shamans" class="text30">0</td>
-            </tr>
-
-        </table>
-    </div>
-    </div>
-
-
-    <div id="control">
-        <div class="text40">Отдайте свой приказ, Милорд</div>
-        <div id="control_buttons">
-            <button onclick="new_choice(0); newinfo(0)"><img src="img/farm.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice(1); newinfo(1)"><img src="img/house.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice(2); newinfo(2)"><img src="img/mine.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice(3); newinfo(3)"><img src="img/sawmill.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice(4); newinfo(4)"><img src="img/healer_house.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice(5); newinfo(5)"><img src="img/gears.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice(6); newinfo(6)"><img src="img/shaman.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice(7); newinfo(7)"><img src="img/swords.png" class="icon" alt="something wrong"></button>
-            <button onclick="new_choice(8); newinfo(8)"><img src="img/zzz.png" class="icon" alt="something wrong"></button>
+      <div class="right-side">
+        <div class="input">
+          input
         </div>
-        <div id="choice">
-            <div class="text30">Ваш выбор:
-                <div class="text30" id="show_choice"></div>
-            </div>
+        <div class="output">
+          output
         </div>
-        <div id="new_day_button" >
-            <button class="text30" onclick="new_day()">Закончить день</button>
+        <div class="result">
+          result
         </div>
-    </div>
-
-
-    <div id="info" >
-        <div id="game_info">
-        <span class="text40">Информация по домам</span>
-        <table id="table_of_info">
-            <tr>
-                <td>Название</td>
-                <td id="info_name_of_building">Дома</td>
-
-            </tr>
-            <tr>
-                <td>Описание</td>
-                <td id="info_text_of_building">
-                    Из дома каждый день появляется 3 человек. Не спрашивайте, как они это делают
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-                    Стоимость
-                </td>
-                <td>
-                    <span id="info_price_of_building">10 дерева 10 камня</span><br>
-                </td>
-            </tr>
-        </table>
+        <div class="story">
+          story
         </div>
-        <div id="messages">
-            <span class="text40">Сообщения</span>
-            <output id="space_for_message">
-
-            </output>
-        </div>
-    </div>
-</div>
-<script src="new_day.js"></script>
+      </div>
+      
+      
+      <script>
+          var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            mode: "cmake",
+            theme: "dracula",
+            lineNumbers: true
+          });
+          editor.setSize("100%", "100%");
+      </script>
+  </div>
 </body>
 </html>
