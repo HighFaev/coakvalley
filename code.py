@@ -8,6 +8,8 @@ from PIL import ImageTk, Image
 import os
 # Использую для трансформации str в dict
 import json
+# Многопоточность
+import threading
 
 win = Tk()
 
@@ -25,6 +27,7 @@ player_save = {
     "screen_width": 1920,
     "screen_height": 1080,
     "last_code": """#include <bits/stdc++.h>\n\nusing namespace std;\n\nint main(){\n   freopen("output.txt", "w", stdout);\n\n   int a = 1;\n   for(int i = 0; i < 10; i++){\n      cout << a + i << endl;\n   }\n}""",
+    "cur_stage": 1      # 1 - menu, 2 - map, 3 - dialog, 4 - editor
 }
 
 
@@ -32,9 +35,11 @@ player_save = {
 if not os.path.isfile("player_save.txt"):
     save = open("player_save.txt", "w+")
     json.dump(player_save, save)
+    save.close()
 else:
     save = open("player_save.txt", "r+")
     player_save = json.load(save)
+    save.close()
 
 
 # Параметры размера экрана
@@ -110,6 +115,7 @@ for i in range(9):
 
 
 def make_map_window():
+    player_save["cur_stage"] = 2
     map_label.place(x=-1, y=-1)
     for i in range(9):
         buttons_for_quest[i].configure(command=lambda k=i: [make_main_game_window(k, quests[k].text), destroy_map_window()],
@@ -142,6 +148,7 @@ exit_button = ttk.Button(text="Отключиться")
 
 
 def make_menu_window():
+    player_save["cur_stage"] = 1
     background_label.place(x=-1, y=-1)
     gamename_label.place(x=25 * vw, y=10 * vh, width=50 * vw, height=20 * vh)
     startgame_button.place(x=35 * vw, y=40 * vh, width=30 * vw, height=10 * vh)
@@ -204,6 +211,7 @@ scrollbar_story_txt = Scrollbar(orient="vertical", command=story_txt.yview, bg="
 ########################################################################################################################
 
 def make_main_game_window(id, quest_text): #Блять, если это тебе придется менять, то земля пухом
+    player_save["cur_stage"] = 4
     # Первая колонка
     first_column_label_width = 2 * int(12.5*vw) - int(1*vw)
     first_column_label_height = int(2*vh)
@@ -288,6 +296,7 @@ def destroy_main_game_window():
     menu_button.place_forget()
     guidebook_button.place_forget()
 
+    player_save["last_code"] = code_txt.get("1.0", "end")
     code_txt.delete("1.0", "end")
     code_label.place_forget()
     #code_numbering_txt.place_forget()
@@ -300,25 +309,62 @@ def destroy_main_game_window():
     story_txt.place_forget()
     scrollbar_story_txt.place_forget()
 
-
 def click_play_button():
+    if os.path.exists("output.txt"):
+        os.remove("output.txt")
+
+    # Записываем код
     f = open("player_code.cpp", "w")
     f.write(code_txt.get("1.0", "end-1c"))
-    print(code_txt.get("1.0", "end-1c"))
     f.close()
+
+    # Компилируем и запускаем программу
+    def destroy_player_prgramm():
+        print("lol")
+
     os.system("g++ player_code.cpp -o player_program")
+    threading.Timer(5, destroy_player_prgramm)
     os.system("./player_program")
-    f = open("output.txt", "r+")
-    output_txt.delete("1.0", "end")
-    output_txt.insert("1.0", f.read())
+
+    # Оцениваем исполнение программы
+    score = -1
+
+    if os.path.exists("output.txt"):
+        score = 0
+        f = open("output.txt", "r+")
 
 
 ########################################################################################################################
 ########################################################################################################################
+
 
 def exit():
+    save = open("player_save.txt", "w+")
+    json.dump(player_save, save)
+    save.close()
+
     win.destroy()
 
+
+def esc_pressed():
+    match player_save["cur_stage"]:
+        case 1:
+            exit()
+        case 2:
+            destroy_map_window()
+            make_menu_window()
+        case 3:
+            print("-dialog")
+        case 4:
+            destroy_main_game_window()
+            make_map_window()
+
+def key_pressed(key):
+    match key.keysym:
+        case "Escape":
+            esc_pressed()
+        case other:
+            print("")
 
 startgame_button["command"] = lambda: [make_map_window(), destroy_menu_window()]
 play_button["command"] = lambda: [click_play_button()]
@@ -327,6 +373,9 @@ exit_button["command"] = exit
 
 make_menu_window()
 
+
+
+win.bind("<KeyPress>", key_pressed)
 win.mainloop()
 
 #       #include <bits/stdc++.h>
