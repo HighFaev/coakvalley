@@ -6,10 +6,12 @@ from tkinter.font import Font
 from PIL import ImageTk, Image
 # Библиотека для системных команд
 import os
+import psutil
+import time
 # Использую для трансформации str в dict
 import json
 # Многопоточность
-import threading
+from threading import Thread
 
 win = Tk()
 
@@ -27,9 +29,8 @@ player_save = {
     "screen_width": 1920,
     "screen_height": 1080,
     "last_code": """#include <bits/stdc++.h>\n\nusing namespace std;\n\nint main(){\n   freopen("output.txt", "w", stdout);\n\n   int a = 1;\n   for(int i = 0; i < 10; i++){\n      cout << a + i << endl;\n   }\n}""",
-    "cur_stage": 1      # 1 - menu, 2 - map, 3 - dialog, 4 - editor
+    "cur_stage": 1  # 1 - menu, 2 - map, 3 - dialog, 4 - editor
 }
-
 
 # открываем сейв
 if not os.path.isfile("player_save.txt"):
@@ -41,11 +42,9 @@ else:
     player_save = json.load(save)
     save.close()
 
-
 # Параметры размера экрана
 screen_width = player_save["screen_width"]
 screen_height = player_save["screen_height"]
-
 
 # Относительные единицы. vh = 1% от высоты экрана, vw = 1% от ширины экрана
 vh = screen_height / 100
@@ -65,32 +64,31 @@ for i in range(9):
     match i:
         case 0:
             # Площадь северная - шут
-            quests.append(Quest(i, "Задача 1", 28 * vh, 73 * vw))
+            quests.append(Quest(i, "Задача 1", 21 * vh, 81.5 * vw))
         case 1:
             # Площадь южная - шут
-            quests.append(Quest(i, "Задача 2", 85 * vh, 67 * vw))
+            quests.append(Quest(i, "Задача 2", 72.5 * vh, 77 * vw))
         case 2:
             # Площадь западная - повар
-            quests.append(Quest(i, "Задача 3", 62 * vh, 22.5 * vw))
+            quests.append(Quest(i, "Задача 3", 56 * vh, 29 * vw))
         case 3:
             # Причал - повар
-            quests.append(Quest(i, "Задача 4", 9 * vh, 64 * vw))
+            quests.append(Quest(i, "Задача 4", 4.5 * vh, 60 * vw))
         case 4:
             # Башня мага - маг
-            quests.append(Quest(i, "Задача 5", 31 * vh, 43.5 * vw))
+            quests.append(Quest(i, "Задача 5", 31.6 * vh, 46.5 * vw))
         case 5:
             # Утес - маг
-            quests.append(Quest(i, "Задача 6", 23 * vh, 5 * vw))
+            quests.append(Quest(i, "Задача 6", 18 * vh, 15 * vw))
         case 6:
             # Главный штаб - генерал
-            quests.append(Quest(i, "Задача 7", 32 * vh, 54 * vw))
+            quests.append(Quest(i, "Задача 7", 28.2 * vh, 54 * vw))
         case 7:
             # Карчма - генерал
-            quests.append(Quest(i, "Задача 8", 77 * vh, 35 * vw))
+            quests.append(Quest(i, "Задача 8", 71.5 * vh, 38.7 * vw))
         case 8:
             # Дворец - королева
-            quests.append(Quest(i, "Задача 9", 51 * vh, 56 * vw))
-
+            quests.append(Quest(i, "Задача 9", 40 * vh, 59 * vw))
 
 ########################################################################################################################
 ########################################################################################################################
@@ -118,9 +116,11 @@ def make_map_window():
     player_save["cur_stage"] = 2
     map_label.place(x=-1, y=-1)
     for i in range(9):
-        buttons_for_quest[i].configure(command=lambda k=i: [make_main_game_window(k, quests[k].text), destroy_map_window()],
-                                       image=travelpoint_img)
-        buttons_for_quest[i].place(x=quests[i].place_button_width, y=quests[i].place_button_height, width=int(2 * vw), height=int(2 * vw))
+        buttons_for_quest[i].configure(
+            command=lambda k=i: [make_main_game_window(k, quests[k].text), destroy_map_window()],
+            image=travelpoint_img)
+        buttons_for_quest[i].place(x=quests[i].place_button_width, y=quests[i].place_button_height, width=int(2 * vw),
+                                   height=int(2 * vw))
 
 
 def destroy_map_window():
@@ -171,10 +171,10 @@ def destroy_menu_window():
 ############################ Создание виджетов для главного экрана с игрой #############################################
 
 
-play_button_img = ImageTk.PhotoImage(Image.open('png/play_btn.png').resize((int(12.5*vw), int(12.5*vh))))
-test_button_img = ImageTk.PhotoImage(Image.open('png/test_btn.png').resize((int(12.5*vw), int(12.5*vh))))
-map_button_img = ImageTk.PhotoImage(Image.open('png/map_btn.png').resize((int(12.5*vw), int(12.5*vh))))
-help_button_img = ImageTk.PhotoImage(Image.open('png/help_btn.png').resize((int(12.5*vw), int(12.5*vh))))
+play_button_img = ImageTk.PhotoImage(Image.open('png/play_btn.png').resize((int(12.5 * vw), int(12.5 * vh))))
+test_button_img = ImageTk.PhotoImage(Image.open('png/test_btn.png').resize((int(12.5 * vw), int(12.5 * vh))))
+map_button_img = ImageTk.PhotoImage(Image.open('png/map_btn.png').resize((int(12.5 * vw), int(12.5 * vh))))
+help_button_img = ImageTk.PhotoImage(Image.open('png/help_btn.png').resize((int(12.5 * vw), int(12.5 * vh))))
 input_label = Label(text="Входные данные")
 output_label = Label(text="Выходные данные")
 verdict_label = Label(text="Результат")
@@ -210,51 +210,66 @@ scrollbar_story_txt = Scrollbar(orient="vertical", command=story_txt.yview, bg="
 
 ########################################################################################################################
 
-def make_main_game_window(id, quest_text): #Блять, если это тебе придется менять, то земля пухом
+def make_main_game_window(id, quest_text):  # Блять, если это тебе придется менять, то земля пухом
     player_save["cur_stage"] = 4
     # Первая колонка
-    first_column_label_width = 2 * int(12.5*vw) - int(1*vw)
-    first_column_label_height = int(2*vh)
-    first_column_txt_width = 2 * int(12.5*vw) - int(1*vw)
-    first_column_txt_height = (100*vh - 3 * int(2*vh) - 2 * int(12.5*vh)) / 3
+    first_column_label_width = 2 * int(12.5 * vw) - int(1 * vw)
+    first_column_label_height = int(2 * vh)
+    first_column_txt_width = 2 * int(12.5 * vw) - int(1 * vw)
+    first_column_txt_height = (100 * vh - 3 * int(2 * vh) - 2 * int(12.5 * vh)) / 3
     first_column_button_width = 12.5 * vw
     first_column_button_height = 12.5 * vh
 
     input_label.place(width=first_column_label_width, height=first_column_label_height, x=0, y=0)
-    output_label.place(width=first_column_label_width, height=first_column_label_height, x=0, y=first_column_txt_height + first_column_label_height)
-    verdict_label.place(width=first_column_label_width, height=first_column_label_height, x=0, y=2 * first_column_txt_height + 2 * first_column_label_height)
+    output_label.place(width=first_column_label_width, height=first_column_label_height, x=0,
+                       y=first_column_txt_height + first_column_label_height)
+    verdict_label.place(width=first_column_label_width, height=first_column_label_height, x=0,
+                        y=2 * first_column_txt_height + 2 * first_column_label_height)
 
     input_txt.place(width=first_column_txt_width, height=first_column_txt_height, x=0, y=first_column_label_height)
-    output_txt.place(width=first_column_txt_width, height=first_column_txt_height, x=0, y=1 * first_column_txt_height + 2 * first_column_label_height)
-    verdict_txt.place(width=first_column_txt_width, height=first_column_txt_height, x=0, y=2 * first_column_txt_height + 3 * first_column_label_height)
+    output_txt.place(width=first_column_txt_width, height=first_column_txt_height, x=0,
+                     y=1 * first_column_txt_height + 2 * first_column_label_height)
+    verdict_txt.place(width=first_column_txt_width, height=first_column_txt_height, x=0,
+                      y=2 * first_column_txt_height + 3 * first_column_label_height)
 
-    scrollbar_input_txt.place(width=int(1 * vw), height=first_column_txt_height + first_column_label_height, x=first_column_txt_width, y=0)
-    scrollbar_output_txt.place(width=int(1 * vw), height=first_column_txt_height + first_column_label_height, x=first_column_txt_width, y=1 * first_column_txt_height + 1 * first_column_label_height)
-    scrollbar_verdict_txt.place(width=int(1 * vw), height=first_column_txt_height + first_column_label_height, x=first_column_txt_width, y=2 * first_column_txt_height + 2 * first_column_label_height)
+    scrollbar_input_txt.place(width=int(1 * vw), height=first_column_txt_height + first_column_label_height,
+                              x=first_column_txt_width, y=0)
+    scrollbar_output_txt.place(width=int(1 * vw), height=first_column_txt_height + first_column_label_height,
+                               x=first_column_txt_width, y=1 * first_column_txt_height + 1 * first_column_label_height)
+    scrollbar_verdict_txt.place(width=int(1 * vw), height=first_column_txt_height + first_column_label_height,
+                                x=first_column_txt_width, y=2 * first_column_txt_height + 2 * first_column_label_height)
 
-    change_mode_button.place(width=first_column_button_width, height=first_column_button_height, x=0, y=3 * first_column_txt_height + 3 * first_column_label_height)
-    play_button.place(width=first_column_button_width, height=first_column_button_height, x=first_column_button_width, y=3 * first_column_txt_height + 3 * first_column_label_height)
-    menu_button.place(width=first_column_button_width, height=first_column_button_height, x=0, y=3 * first_column_txt_height + 3 * first_column_label_height + first_column_button_height)
-    guidebook_button.place(width=first_column_button_width, height=first_column_button_height, x=first_column_button_width, y=3 * first_column_txt_height + 3 * first_column_label_height + first_column_button_height)
+    change_mode_button.place(width=first_column_button_width, height=first_column_button_height, x=0,
+                             y=3 * first_column_txt_height + 3 * first_column_label_height)
+    play_button.place(width=first_column_button_width, height=first_column_button_height, x=first_column_button_width,
+                      y=3 * first_column_txt_height + 3 * first_column_label_height)
+    menu_button.place(width=first_column_button_width, height=first_column_button_height, x=0,
+                      y=3 * first_column_txt_height + 3 * first_column_label_height + first_column_button_height)
+    guidebook_button.place(width=first_column_button_width, height=first_column_button_height,
+                           x=first_column_button_width,
+                           y=3 * first_column_txt_height + 3 * first_column_label_height + first_column_button_height)
 
     input_txt["yscrollcommand"] = scrollbar_input_txt.set
     output_txt["yscrollcommand"] = scrollbar_output_txt.set
     verdict_txt["yscrollcommand"] = scrollbar_verdict_txt.set
 
     # Вторая колонка
-    second_column_label_width = 100*vw - 2 * int(12.5 * vw) - int(35 * vw) - int(1 * vw)
+    second_column_label_width = 100 * vw - 2 * int(12.5 * vw) - int(35 * vw) - int(1 * vw)
     second_column_label_height = int(2 * vh)
-    second_column_txt_width = 100*vw - 2 * int(12.5 * vw) - int(35 * vw) - int(1 * vw)
+    second_column_txt_width = 100 * vw - 2 * int(12.5 * vw) - int(35 * vw) - int(1 * vw)
     second_column_txt_height = 100 * vh - int(2 * vh)
 
-    code_label.place(width=second_column_label_width, height=second_column_label_height, x=first_column_label_width + int(1 * vw), y=0)
-    code_txt.place(width=second_column_txt_width, height=second_column_txt_height, x=first_column_label_width + int(1 * vw), y=second_column_label_height)
-    #code_numbering_txt.place(width=3 * vw, height=98 * vh, x=25 * vw, y=2 * vh)
-    scrollbar_code_txt.place(width=int(1 * vw), height=100 * vh, x=first_column_label_width + int(1 * vw) + second_column_txt_width, y=0)
+    code_label.place(width=second_column_label_width, height=second_column_label_height,
+                     x=first_column_label_width + int(1 * vw), y=0)
+    code_txt.place(width=second_column_txt_width, height=second_column_txt_height,
+                   x=first_column_label_width + int(1 * vw), y=second_column_label_height)
+    # code_numbering_txt.place(width=3 * vw, height=98 * vh, x=25 * vw, y=2 * vh)
+    scrollbar_code_txt.place(width=int(1 * vw), height=100 * vh,
+                             x=first_column_label_width + int(1 * vw) + second_column_txt_width, y=0)
 
     code_txt["yscrollcommand"] = scrollbar_code_txt.set
     code_txt.insert("0.0", str(player_save["last_code"]))
-    #code_numbering_txt["yscrollcommand"] = scrollbar_code_txt.set
+    # code_numbering_txt["yscrollcommand"] = scrollbar_code_txt.set
 
     # Третья колонка
     third_column_frame_width = int(35 * vw)
@@ -264,14 +279,20 @@ def make_main_game_window(id, quest_text): #Блять, если это тебе
     third_column_txt_width = int(35 * vw) - int(1 * vw)
     third_column_txt_height = 100 * vh - int(2 * vh) - int(35 * vw)
 
-    minigame.place(width=third_column_frame_width, height=third_column_frame_height, x=first_column_label_width + int(1 * vw) + second_column_label_width + int(1 * vw), y=0)
+    minigame.place(width=third_column_frame_width, height=third_column_frame_height,
+                   x=first_column_label_width + int(1 * vw) + second_column_label_width + int(1 * vw), y=0)
 
-    story_label.place(width=third_column_label_width, height=third_column_label_height, x=first_column_label_width + int(1 * vw) + second_column_label_width + int(1 * vw), y=third_column_frame_height)
+    story_label.place(width=third_column_label_width, height=third_column_label_height,
+                      x=first_column_label_width + int(1 * vw) + second_column_label_width + int(1 * vw),
+                      y=third_column_frame_height)
 
-    story_txt.place(width=third_column_txt_width, height=third_column_txt_height, x=first_column_label_width + int(1 * vw) + second_column_label_width + int(1 * vw), y=third_column_frame_height + third_column_label_height)
+    story_txt.place(width=third_column_txt_width, height=third_column_txt_height,
+                    x=first_column_label_width + int(1 * vw) + second_column_label_width + int(1 * vw),
+                    y=third_column_frame_height + third_column_label_height)
 
-    scrollbar_story_txt.place(width=int(1 * vw), height=third_column_txt_height + third_column_label_height, x=first_column_label_width + int(1 * vw) + second_column_label_width + int(1 * vw) + third_column_label_width, y=third_column_frame_height)
-
+    scrollbar_story_txt.place(width=int(1 * vw), height=third_column_txt_height + third_column_label_height,
+                              x=first_column_label_width + int(1 * vw) + second_column_label_width + int(
+                                  1 * vw) + third_column_label_width, y=third_column_frame_height)
 
     story_txt["yscrollcommand"] = scrollbar_story_txt.set
 
@@ -299,7 +320,7 @@ def destroy_main_game_window():
     player_save["last_code"] = code_txt.get("1.0", "end")
     code_txt.delete("1.0", "end")
     code_label.place_forget()
-    #code_numbering_txt.place_forget()
+    # code_numbering_txt.place_forget()
     code_txt.place_forget()
     scrollbar_code_txt.place_forget()
 
@@ -308,6 +329,7 @@ def destroy_main_game_window():
     story_label.place_forget()
     story_txt.place_forget()
     scrollbar_story_txt.place_forget()
+
 
 def click_play_button():
     if os.path.exists("output.txt"):
@@ -319,12 +341,21 @@ def click_play_button():
     f.close()
 
     # Компилируем и запускаем программу
-    def destroy_player_prgramm():
-        print("lol")
-
     os.system("g++ player_code.cpp -o player_program")
-    threading.Timer(5, destroy_player_prgramm)
-    os.system("./player_program")
+
+    def loop1():
+        time.sleep(2)
+        for proc in psutil.process_iter():
+            if proc.name() == "player_program":
+                proc.kill()
+                print("stop_player_program")
+
+    def loop2():
+        print("start_player_program")
+        os.system("./player_program")
+
+    Thread(target=loop2).start()
+    Thread(target=loop1).start()
 
     # Оцениваем исполнение программы
     score = -1
@@ -359,6 +390,7 @@ def esc_pressed():
             destroy_main_game_window()
             make_map_window()
 
+
 def key_pressed(key):
     match key.keysym:
         case "Escape":
@@ -366,14 +398,13 @@ def key_pressed(key):
         case other:
             print("")
 
+
 startgame_button["command"] = lambda: [make_map_window(), destroy_menu_window()]
 play_button["command"] = lambda: [click_play_button()]
 menu_button["command"] = lambda: [destroy_main_game_window(), make_map_window()]
 exit_button["command"] = exit
 
 make_menu_window()
-
-
 
 win.bind("<KeyPress>", key_pressed)
 win.mainloop()
